@@ -1,7 +1,6 @@
 package async
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -54,15 +53,12 @@ func (ec *ServiceManager) SendEvent(event interface{}) {
 
 // Exit the event controller
 func (ec *ServiceManager) Exit() (err error) {
-	fmt.Println("Exiting services")
 
 	// Close input channel (causing child services to exit)
 	close(ec.in)
 
 	// Await exit of subroutines
 	ec.wg.Wait()
-
-	fmt.Println("Exited services")
 
 	return nil
 }
@@ -92,7 +88,6 @@ func (ec *ServiceManager) eventLoop() (err error) {
 
 // Execute a service
 func (ec *ServiceManager) execute(service ServiceInterface) {
-	fmt.Println("Starting service")
 	service.Run()
 	defer ec.wg.Done()
 }

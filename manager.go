@@ -5,29 +5,29 @@ import (
 )
 
 // Interface that services must implement
-type ServiceInterface interface {
+type RunnableInterface interface {
 	Run() error
 	SendEvent(e interface{}) error
 	Exit() error
 }
 
-// Event controller interface
+// Service Manager
 type ServiceManager struct {
 	in       chan interface{}
-	services []ServiceInterface
+	services []RunnableInterface
 	wg       sync.WaitGroup
 }
 
-// Instantiate a mail controller
-func NewServiceManager() *ServiceManager {
+// Instantiate a Service Manger
+func NewServiceManager(channelSize uint) *ServiceManager {
 
-	in := make(chan interface{}, 100)
+	in := make(chan interface{}, channelSize)
 
 	return &ServiceManager{in: in}
 }
 
-// Bind a service to the event controller
-func (ec *ServiceManager) BindService(service ServiceInterface) {
+// Bind a service to the service manager
+func (ec *ServiceManager) BindService(service RunnableInterface) {
 	ec.services = append(ec.services, service)
 }
 
@@ -51,7 +51,8 @@ func (ec *ServiceManager) SendEvent(event interface{}) {
 	ec.in <- event
 }
 
-// Exit the event controller
+// Exit the service manager
+// This will gracefully exit all child services
 func (ec *ServiceManager) Exit() (err error) {
 
 	// Close input channel (causing child services to exit)
@@ -87,7 +88,7 @@ func (ec *ServiceManager) eventLoop() (err error) {
 }
 
 // Execute a service
-func (ec *ServiceManager) execute(service ServiceInterface) {
+func (ec *ServiceManager) execute(service RunnableInterface) {
 	service.Run()
 	defer ec.wg.Done()
 }

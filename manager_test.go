@@ -17,10 +17,10 @@ func (fw *FakeWorker) HandleEvent(event interface{}) error {
 
 func TestServiceManager(t *testing.T) {
 	// Create controllers
-	ec := NewServiceManager()
+	ec := NewServiceManager(32)
 
-	es1 := NewAsyncService(&FakeWorker{id: 1})
-	es2 := NewAsyncService(&FakeWorker{id: 2})
+	es1 := NewAsyncService(&FakeWorker{id: 1}, 2)
+	es2 := NewAsyncService(&FakeWorker{id: 2}, 2)
 
 	// Run tests
 	t.Run("Send event", func(t *testing.T) {

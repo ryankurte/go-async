@@ -1,8 +1,10 @@
-# go-async
+# go-async-mgr
 
-[![Documentation](https://img.shields.io/badge/docs-godoc-blue.svg)](https://godoc.org/github.com/ryankurte/go-async)
+[![Documentation](https://img.shields.io/badge/docs-godoc-blue.svg)](https://godoc.org/github.com/ryankurte/go-async-mgr)
+[![GitHub tag](https://img.shields.io/github/tag/ryankurte/go-async-mgr.svg)](https://github.com/ryankurte/go-async-mgr)
+[![Build Status](https://travis-ci.org/ryankurte/go-async-mgr.svg?branch=master)](https://travis-ci.org/ryankurte/go-async-mgr)
 
-A quick and dirty wrapper for managing parallel asynchronous services.
+A quick and dirty wrapper for managing communication between parallel asynchronous services.
 
 ## Usage
 

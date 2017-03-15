@@ -10,14 +10,19 @@ A quick and dirty wrapper for managing communication between parallel asynchrono
 
 ```go
 
+
+import(
+    "gopkg.in/ryankurte/go-async-mgr.v1"
+)
+
 // Create a service manager
 // This requires that you specify the global input channel size
-sm := NewServiceManager(32)
+sm := async.NewServiceManager(32)
 
 // Create async service instances around RunnableInterfaces
 // Again, this requires that you specify the per-service input channel size
-s1 := NewAsyncService(&FakeWorker{id: 1}, 2)
-s2 := NewAsyncService(&FakeWorker{id: 2}, 2)
+s1 := async.NewAsyncService(&FakeWorker{id: 1}, 2)
+s2 := async.NewAsyncService(&FakeWorker{id: 2}, 2)
 
 // Bind the services into the manager
 sm.BindService(&s1)
